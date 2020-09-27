@@ -29,11 +29,11 @@ function markerSize(magnitude) {
 
 // Function to select colour for each marker based on earthquake depth
 function depthColor(depth) {
-  if (depth < 10) color = "#7CFC00";
-  else if (depth < 30) color = "#E5FE52";
-  else if (depth < 50) color = "#F8B23B";
-  else if (depth < 70) color = "#FFA500";
-  else if (depth < 90) color = "#FFA07A";
+  if (depth < 10) color = "#99FF33";
+  else if (depth < 30) color = "#CCFF66";
+  else if (depth < 50) color = "#FFCC33";
+  else if (depth < 70) color = "#FF9900";
+  else if (depth < 90) color = "#FF6600";
   else color = "#FF0000";
   return color;
 }
@@ -100,15 +100,15 @@ d3.json(url, (response) => {
     var div = L.DomUtil.create("div", "info legend");
     div.innerHTML += "<h4>Earthquake Depth</h4>";
     div.innerHTML +=
-      '<i style="background: #7CFC00"></i><span> -10 to 10</span><br>';
+      '<i style="background: #99FF33"></i><span> -10 to 10</span><br>';
     div.innerHTML +=
-      '<i style="background: #E5FE52"></i><span>10 to 30</span><br>';
+      '<i style="background: #CCFF66"></i><span>10 to 30</span><br>';
     div.innerHTML +=
-      '<i style="background: #F8B23B"></i><span>30 to 50</span><br>';
+      '<i style="background: #FFCC33"></i><span>30 to 50</span><br>';
     div.innerHTML +=
-      '<i style="background: #FFA500"></i><span>50 to 70</span><br>';
+      '<i style="background: #FF9900"></i><span>50 to 70</span><br>';
     div.innerHTML +=
-      '<i style="background: #FFA07A"></i><span>70 to 90</span><br>';
+      '<i style="background: #FF6600"></i><span>70 to 90</span><br>';
     div.innerHTML += '<i style="background: #FF0000"></i><span>90 +</span><br>';
 
     return div;
