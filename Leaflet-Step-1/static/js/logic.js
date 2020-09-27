@@ -1,6 +1,6 @@
 // Set variables for the map to be centred around the geographic centre of United States
 var usCentre = [44.967243, -103.771556];
-var mapZoomLevel = 4;
+var mapZoomLevel = 4.5;
 
 // Create the createMap function
 var myMap = L.map("map", {
@@ -21,6 +21,11 @@ L.tileLayer(
     accessToken: API_KEY,
   }
 ).addTo(myMap);
+
+// Define a markerSize function that will give each earthquake location a different radius based on its magnitude
+function markerSize(magnitude) {
+  return magnitude * 15500;
+}
 
 // Load in geojson data
 var url =
@@ -54,15 +59,18 @@ d3.json(url, (response) => {
     var longitude = earthquake.geometry.coordinates[0];
     var latitude = earthquake.geometry.coordinates[1];
     var depth = earthquake.geometry.coordinates[2];
+    var magnitude = earthquake.properties.mag;
+
     // console.log(latitude);
     // console.log(longitude);
     // console.log(depth);
+    // console.log(magnitude);
 
     var marker = L.circle([latitude, longitude], {
       fillOpacity: 0.75,
       color: "black",
       fillColor: "red",
-      radius: 50000,
+      radius: markerSize(magnitude),
     }).addTo(myMap);
   });
 });
