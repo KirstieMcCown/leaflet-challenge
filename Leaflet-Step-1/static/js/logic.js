@@ -27,6 +27,17 @@ function markerSize(magnitude) {
   return magnitude * 15500;
 }
 
+// Function to select colour for each marker based on earthquake depth
+function depthColor(depth) {
+  if (depth < 10) color = "#7CFC00";
+  else if (depth < 30) color = "#E5FE52";
+  else if (depth < 50) color = "#F8B23B";
+  else if (depth < 70) color = "#FFA500";
+  else if (depth < 90) color = "#FFA07A";
+  else color = "#FF0000";
+  return color;
+}
+
 // Load in geojson data
 var url =
   "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
@@ -42,17 +53,17 @@ d3.json(url, (response) => {
   // Each earthquake
   console.log(earthquakes);
 
-  // Coordinates of each earthquake
-  console.log(earthquakes[0].geometry.coordinates);
+  // // Coordinates of each earthquake
+  // console.log(earthquakes[0].geometry.coordinates);
 
-  // Longitude
-  console.log(earthquakes[0].geometry.coordinates[0]);
+  // // Longitude
+  // console.log(earthquakes[0].geometry.coordinates[0]);
 
-  // Latitude
-  console.log(earthquakes[0].geometry.coordinates[1]);
+  // // Latitude
+  // console.log(earthquakes[0].geometry.coordinates[1]);
 
-  // Depth
-  console.log(earthquakes[0].geometry.coordinates[2]);
+  // // Depth
+  // console.log(earthquakes[0].geometry.coordinates[2]);
 
   // Loop through each feature and create one marker for each earthquake object
   earthquakes.forEach((earthquake) => {
@@ -69,8 +80,39 @@ d3.json(url, (response) => {
     var marker = L.circle([latitude, longitude], {
       fillOpacity: 0.75,
       color: "black",
-      fillColor: "red",
+      weight: 1,
+      fillColor: depthColor(depth),
       radius: markerSize(magnitude),
-    }).addTo(myMap);
+    })
+      .bindPopup(
+        "<h2>" +
+          earthquake.properties.place +
+          "</h2><h3>Magnitude: " +
+          magnitude +
+          "<h3>Depth: " +
+          depth
+      )
+      .addTo(myMap);
   });
+
+  var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function (myMap) {
+    var div = L.DomUtil.create("div", "info legend");
+    div.innerHTML += "<h4>Earthquake Depth</h4>";
+    div.innerHTML +=
+      '<i style="background: #7CFC00"></i><span> -10 to 10</span><br>';
+    div.innerHTML +=
+      '<i style="background: #E5FE52"></i><span>10 to 30</span><br>';
+    div.innerHTML +=
+      '<i style="background: #F8B23B"></i><span>30 to 50</span><br>';
+    div.innerHTML +=
+      '<i style="background: #FFA500"></i><span>50 to 70</span><br>';
+    div.innerHTML +=
+      '<i style="background: #FFA07A"></i><span>70 to 90</span><br>';
+    div.innerHTML += '<i style="background: #FF0000"></i><span>90 +</span><br>';
+
+    return div;
+  };
+
+  legend.addTo(myMap);
 });
