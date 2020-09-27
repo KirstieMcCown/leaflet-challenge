@@ -1,6 +1,6 @@
-// Set variables for the map to be centred around the geographic centre of United States
-var usCentre = [44.967243, -103.771556];
-var mapZoomLevel = 4.5;
+// Set variables for the map to be centred around Lewellen, Nebraska for best visual of earthquake locations
+var usCentre = [41.330692, -102.145487];
+var mapZoomLevel = 5;
 
 // Create the createMap function
 var myMap = L.map("map", {
