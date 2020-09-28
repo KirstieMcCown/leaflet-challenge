@@ -2,71 +2,6 @@
 var earthquakeMarker;
 var techtonicplates;
 
-// Set variables for the map to be centred around Lewellen, Nebraska for best visual of earthquake locations
-var usCentre = [41.330692, -102.145487];
-var mapZoomLevel = 5;
-
-// Create the tile layer(s) that will be the chosen background of our map
-var streets = L.tileLayer(
-  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-  {
-    attribution:
-      "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    tileSize: 512,
-    maxZoom: 18,
-    zoomOffset: -1,
-    id: "mapbox/streets-v11",
-    accessToken: API_KEY,
-  }
-);
-
-var lightmap = L.tileLayer(
-  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-  {
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    tileSize: 512,
-    maxZoom: 18,
-    zoomOffset: -1,
-    id: "light-v10",
-    accessToken: API_KEY,
-  }
-);
-
-var darkmap = L.tileLayer(
-  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-  {
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    tileSize: 512,
-    maxZoom: 18,
-    zoomOffset: -1,
-    id: "dark-v10",
-    accessToken: API_KEY,
-  }
-);
-
-var satellite = L.tileLayer(
-  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-  {
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    tileSize: 512,
-    maxZoom: 18,
-    zoomOffset: -1,
-    id: "satellite-streets-v11",
-    accessToken: API_KEY,
-  }
-);
-
-// Create a baseMaps object to hold base map options - only one can be shown at a time
-var baseMaps = {
-  "Street Map": streets,
-  "Light Map": lightmap,
-  "Dark Map": darkmap,
-  "Satellite Map": satellite,
-};
-
 // Define a markerSize function that will give each earthquake location a different radius based on its magnitude
 function markerSize(magnitude) {
   return magnitude * 15500;
@@ -178,6 +113,63 @@ d3.json(link, function (data) {
   }).addTo(myMap);
 });
 
+////////////////////////////////////////////////////////////////////////////
+//                                Map Setup                               //
+////////////////////////////////////////////////////////////////////////////
+
+// Create the tile layer(s) that will be the chosen background of our map
+var streets = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "mapbox/streets-v11",
+    accessToken: API_KEY,
+  }
+);
+
+var lightmap = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "light-v10",
+    accessToken: API_KEY,
+  }
+);
+
+var darkmap = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "dark-v10",
+    accessToken: API_KEY,
+  }
+);
+
+var satellite = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "satellite-streets-v11",
+    accessToken: API_KEY,
+  }
+);
+
 // Add all the earthquakeMarkers to a new layer group.
 // Now we can handle them as one group instead of referencing each individually
 var earthquakeLayer = L.layerGroup(earthquakeMarker);
@@ -186,17 +178,29 @@ var earthquakeLayer = L.layerGroup(earthquakeMarker);
 // // Now we can handle them as one group instead of referencing each individually
 var plateLayer = L.layerGroup(techtonicplates);
 
+// Create a baseMaps object to hold base map options - only one can be shown at a time
+var baseMaps = {
+  "Street Map": streets,
+  "Light Map": lightmap,
+  "Dark Map": darkmap,
+  "Satellite Map": satellite,
+};
+
 // Create an overlayMaps object to hold other layers
 var overlayMaps = {
   Earthquakes: earthquakeLayer,
   "Techtonic Plates": plateLayer,
 };
 
+// Set variables for the map to be centred around Lewellen, Nebraska for best visual of earthquake locations
+var usCentre = [41.330692, -102.145487];
+var mapZoomLevel = 5;
+
 // Create map object and set default layers
 var myMap = L.map("map", {
   center: usCentre,
   zoom: mapZoomLevel,
-  layers: [streets, earthquakeLayer],
+  layers: [streets, earthquakeLayer, plateLayer],
 });
 
 // Pass our map layers into our layer control
