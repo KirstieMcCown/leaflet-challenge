@@ -1,15 +1,13 @@
+// Declare global variables for markers to be added to layers
+var earthquakeMarker;
+var techtonicplates;
+
 // Set variables for the map to be centred around Lewellen, Nebraska for best visual of earthquake locations
 var usCentre = [41.330692, -102.145487];
 var mapZoomLevel = 5;
 
-// Create the createMap function
-var myMap = L.map("map", {
-  center: usCentre,
-  zoom: mapZoomLevel,
-});
-
-// Create the tile layer that will be the background of our map
-L.tileLayer(
+// Create the tile layer(s) that will be the chosen background of our map
+var streets = L.tileLayer(
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
   {
     attribution:
@@ -20,7 +18,64 @@ L.tileLayer(
     id: "mapbox/streets-v11",
     accessToken: API_KEY,
   }
-).addTo(myMap);
+);
+
+var lightmap = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "light-v10",
+    accessToken: API_KEY,
+  }
+);
+
+var darkmap = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "dark-v10",
+    accessToken: API_KEY,
+  }
+);
+
+var satellite = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+  {
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "satellite-streets-v11",
+    accessToken: API_KEY,
+  }
+);
+
+// Create a baseMaps object to hold base map options - only one can be shown at a time
+var baseMaps = {
+  "Street Map": streets,
+  "Light Map": lightmap,
+  "Dark Map": darkmap,
+  "Satellite Map": satellite,
+};
+
+// Create an overlayMaps object to hold other layers
+var overlayMaps = {};
+
+// Create map object and set default layers
+var myMap = L.map("map", {
+  center: usCentre,
+  zoom: mapZoomLevel,
+  layers: [streets],
+});
 
 // Define a markerSize function that will give each earthquake location a different radius based on its magnitude
 function markerSize(magnitude) {
@@ -75,7 +130,7 @@ d3.json(url, (response) => {
     // console.log(depth);
     // console.log(magnitude);
 
-    var marker = L.circle([latitude, longitude], {
+    var earthquakeMarker = L.circle([latitude, longitude], {
       fillOpacity: 0.75,
       color: "black",
       weight: 1,
@@ -114,3 +169,19 @@ d3.json(url, (response) => {
 
   legend.addTo(myMap);
 });
+
+// Add all the earthquakeMarkers to a new layer group.
+// Now we can handle them as one group instead of referencing each individually
+var earthquakeLayer = L.layerGroup(earthquakeMarker);
+
+// // Add all the techtonic plate shapes to a new layer group.
+// // Now we can handle them as one group instead of referencing each individually
+// var plateLayer = L.layerGroup(techtonicplates);
+
+// Pass our remaining map layers into our layer control
+// Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
+L.control
+  .layers(baseMaps, overlayMaps, {
+    collapsed: false,
+  })
+  .addTo(myMap);
