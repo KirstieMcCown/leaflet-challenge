@@ -67,16 +67,6 @@ var baseMaps = {
   "Satellite Map": satellite,
 };
 
-// Create an overlayMaps object to hold other layers
-var overlayMaps = {};
-
-// Create map object and set default layers
-var myMap = L.map("map", {
-  center: usCentre,
-  zoom: mapZoomLevel,
-  layers: [streets],
-});
-
 // Define a markerSize function that will give each earthquake location a different radius based on its magnitude
 function markerSize(magnitude) {
   return magnitude * 15500;
@@ -93,7 +83,7 @@ function depthColor(depth) {
   return color;
 }
 
-// Load in geojson data
+// Load in geojson data for earthquakes
 var url =
   "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
@@ -170,15 +160,46 @@ d3.json(url, (response) => {
   legend.addTo(myMap);
 });
 
+// Add in techtonic plates
+// Link to json file for techtonic plates
+var link = "static/data/PB2002_plates.json";
+
+// Grabbing our JSON data..
+d3.json(link, function (data) {
+  // Creating a geoJSON layer with the retrieved data
+  techtonicplates = L.geoJson(data, {
+    style: function (feature) {
+      return {
+        color: "#FF8C00",
+        weight: 2.5,
+        fillOpacity: 0,
+      };
+    },
+  }).addTo(myMap);
+});
+
 // Add all the earthquakeMarkers to a new layer group.
 // Now we can handle them as one group instead of referencing each individually
 var earthquakeLayer = L.layerGroup(earthquakeMarker);
 
 // // Add all the techtonic plate shapes to a new layer group.
 // // Now we can handle them as one group instead of referencing each individually
-// var plateLayer = L.layerGroup(techtonicplates);
+var plateLayer = L.layerGroup(techtonicplates);
 
-// Pass our remaining map layers into our layer control
+// Create an overlayMaps object to hold other layers
+var overlayMaps = {
+  Earthquakes: earthquakeLayer,
+  "Techtonic Plates": plateLayer,
+};
+
+// Create map object and set default layers
+var myMap = L.map("map", {
+  center: usCentre,
+  zoom: mapZoomLevel,
+  layers: [streets, earthquakeLayer],
+});
+
+// Pass our map layers into our layer control
 // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
 L.control
   .layers(baseMaps, overlayMaps, {
