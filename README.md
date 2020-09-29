@@ -3,7 +3,7 @@
 ![Header](Images/Header.PNG)<br>
 
 Welcome to my project repo! 
-You can visit the website [here](https://kirstiemccown.github.io/Plot.ly-Homework/), or feel free to take a look around the repo folders! 
+You can visit the website [here](https://kirstiemccown.github.io/leaflet-challenge/), or feel free to take a look around the repo folders! 
 When you visit the website, you will find an interactive map where you can observe information about earthquakes and techtonic plates!
 
 If you are interested, you can find out more information about the data here:<br>
