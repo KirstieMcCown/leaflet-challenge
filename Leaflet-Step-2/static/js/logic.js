@@ -200,7 +200,7 @@ d3.json(url, (response) => {
 
 // Add in techtonic plates
 // Link to json file for techtonic plates
-var link = "static/data/PB2002_plates.json";
+var link = "Leaflet-Step-2/static/data/PB2002_plates.json";
 
 // Grabbing our JSON data..
 d3.json(link, function (data) {
