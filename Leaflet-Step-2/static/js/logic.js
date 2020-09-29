@@ -1,3 +1,6 @@
+// Declare global variable for API Keys to run on GitHub Pages
+var API_KEY = config.API_KEY;
+
 // Declare global variables for markers to be added to layers
 var earthquakeMarker;
 var techtonicplates;

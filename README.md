@@ -10,6 +10,10 @@ If you are interested, you can find out more information about the data here:<br
 * [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
 * [Techtonic Plates](https://github.com/fraxen/tectonicplates)<br><br>
 
+## Viewing the Map Offline
+In order to view the map, you will need to generate your own API Key from : https://www.mapbox.com/
+This will need to be placed in either of the project folder(s) '/static/js/config.js', and the HTML and JS files changed to ensure the correct file paths are being used for visulisation. 
+
 ## About the Map
 <hr>
 The USGS provides earthquake data in a number of different formats, updated every 5 minutes. The dataset that has been utilised in this project is 'All Earthquakes from the Past 7 Days'. When visiting the USGS GeoJSON Feed you can see a JSON representation of datasets available. I have used the URL of this ('All Earthquakes from the Past 7 Days') JSON to pull in the data for visualization for this project.
