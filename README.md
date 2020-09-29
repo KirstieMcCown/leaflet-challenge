@@ -3,14 +3,14 @@
 ![Header](Images/Header.PNG)<br>
 
 Welcome to my project repo! 
-You can visit the website [here](https://kirstiemccown.github.io/leaflet-challenge/), or feel free to take a look around the repo folders! 
-When you visit the website, you will find an interactive map where you can observe information about earthquakes and techtonic plates!
+Feel free to take a look around the repo folders! 
+This project is creating an interactive map where you can observe information about earthquakes and techtonic plates!
 
 If you are interested, you can find out more information about the data here:<br>
 * [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
 * [Techtonic Plates](https://github.com/fraxen/tectonicplates)<br><br>
 
-## Viewing the Map Offline
+## Viewing the Map
 In order to view the map, you will need to generate your own API Key from : https://www.mapbox.com/
 This will need to be placed in either of the project folder(s) '/static/js/config.js', and the HTML and JS files changed to ensure the correct file paths are being used for visulisation. 
 

@@ -1,6 +1,3 @@
-// Declare global variable for API Keys to run on GitHub Pages
-var API_KEY = config.API_KEY;
-
 // Declare global variables for markers to be added to layers
 var earthquakeMarker;
 var techtonicplates;
@@ -203,7 +200,7 @@ d3.json(url, (response) => {
 
 // Add in techtonic plates
 // Link to json file for techtonic plates
-var link = "Leaflet-Step-2/static/data/PB2002_plates.json";
+var link = "static/data/PB2002_plates.json";
 
 // Grabbing our JSON data..
 d3.json(link, function (data) {
