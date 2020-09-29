@@ -24,7 +24,7 @@ Alongside the data from USGS, a second dataset has been utilised, in order to il
 
 <h3>Base & Overlay Layers</h3><hr>
 <p align="center">
-  <img width="30%" src="Images/LayerControl.PNG">
+  <img width="20%" src="Images/LayerControl.PNG">
 </p>
 When visualising the map, you can turn on and off layers to see earthquake data, techtonic plates or both. 
 There is also a number of base layer maps that can be utilised depending on your preference. 
@@ -33,7 +33,7 @@ As a default, the street map, earthquake and techtonic plates will all be loaded
 
 <h3>Legend</h3><hr>
 <p align="center">
-  <img width="30%" src="Images/Legend.PNG">
+  <img width="20%" src="Images/Legend.PNG">
 </p>
 When visualising the map, each of the earthquake markers (cirlces) are identified by 2 properties. The size of the marker, relates to the size of magnitude and the colour relates to the depth of the earthquake as seen on the legend positioned in the bottom right hand corner of the map.<br><br><br>
 
